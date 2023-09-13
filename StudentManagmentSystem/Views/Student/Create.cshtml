@@ -19,11 +19,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Student.StudentId" class="control-label">Код студента</label>
-                <input asp-for="Student.StudentId" class="form-control" />
-                @* <span asp-validation-for="Code" class="text-danger"></span> *@
-            </div>
-            <div class="form-group">
                 <label asp-for="Student.FirstName" class="control-label">Имя клиента</label>
                 <input asp-for="Student.FirstName" class="form-control" />
                 @* <span asp-validation-for="FirstName" class="text-danger"></span> *@

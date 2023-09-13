@@ -6,12 +6,12 @@ namespace StudentManagmentSystem.Models.Entities
     {
         [Key]
         public int Id { get; set; }
-       // public int RegistrationId { get; set; }
-        public string CountryName { get; set; }
-        public string RegionName { get; set; }
-        public string DistrictName { get; set; }
-        public string StreetName { get; set; }
-        public string HouseNumber { get; set; }
-        public int RoomNumber { get; set; }
+        public int? StudentId { get; set; }
+        public string? CountryName { get; set; }
+        public string? RegionName { get; set; }
+        public string? DistrictName { get; set; }
+        public string? StreetName { get; set; }
+        public string? HouseNumber { get; set; }
+        public int? RoomNumber { get; set; }
     }
 }

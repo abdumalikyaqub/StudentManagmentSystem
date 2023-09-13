@@ -7,6 +7,7 @@ namespace StudentManagmentSystem.Models.Entities
         [Key]
         public int Id { get; set; }
        // public int EducationId { get; set; }
+        public int? StudentId { get; set; }
         public int? EducationFormId { get; set; }
         public int? EducationLevelId { get; set; }
         public string? Status { get; set; }

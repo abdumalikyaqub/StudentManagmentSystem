@@ -29,11 +29,25 @@ namespace StudentManagmentSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(StudentDetailsViewModel studentDetails)
+        public async Task<IActionResult> Create(StudentDetailsViewModel studentDetails)
         {
-            _studentRepository.AddStudent(studentDetails.Student);
-            _educationRepository.AddEducation(studentDetails.Education);
-            _dactyloscopyRepository.AddDactyloscopy(studentDetails.Dactyloscopy);
+            var rand = new Random();
+            bool t = true;
+            while (t)
+            {
+                int studentId = rand.Next(1000, 9999);
+                bool student = await _studentRepository.IsStudentById(studentId);
+                if (!student)
+                {
+                    studentDetails.Student.StudentId = studentId;
+                    studentDetails.Education.StudentId = studentId;
+                    studentDetails.Dactyloscopy.StudentId = studentId;
+                    t = false;
+                }
+            }
+            await _educationRepository.AddEducation(studentDetails.Education);
+            await _dactyloscopyRepository.AddDactyloscopy(studentDetails.Dactyloscopy);
+            await _studentRepository.AddStudent(studentDetails.Student);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,4 +1,5 @@
-﻿using StudentManagmentSystem.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentManagmentSystem.Models.Entities;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
 
 namespace StudentManagmentSystem.Models.Repositories.Implementation
@@ -10,27 +11,32 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
         {
             _context = context;
         }
-        public void AddStudent(Student student)
+        public async Task AddStudent(Student student)
         {
             _context.Students.Add(student);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteStudentById(int id)
+        public async Task DeleteStudentById(int id)
         {
-            var student = _context.Students.Find(id);
+            var student = await _context.Students.FindAsync(id);
             _context.Students.Remove(student);
         }
 
-        public Student GetStudentById(int id)
+        public async Task<Student> GetStudentById(int id)
         {
-            return _context.Students.Find(id);
+            return await (Task<Student>)_context.Students.Where(e => e.StudentId == id);
         }
 
-        public void UpdateStudent(Student student)
+        public async Task<bool> IsStudentById(int id)
+        {
+            return await _context.Students.AnyAsync(e => e.StudentId == id);
+        }
+
+        public async Task UpdateStudent(Student student)
         {
             _context.Students.Update(student);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

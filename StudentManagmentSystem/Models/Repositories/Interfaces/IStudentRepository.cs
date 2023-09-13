@@ -4,9 +4,10 @@ namespace StudentManagmentSystem.Models.Repositories.Interfaces
 {
     public interface IStudentRepository
     {
-        void AddStudent(Student student);
-        Student GetStudentById(int id);
-        void UpdateStudent(Student student);
-        void DeleteStudentById(int id);
+        Task AddStudent(Student student);
+        Task<Student> GetStudentById(int id);
+        Task<bool> IsStudentById(int id);
+        Task UpdateStudent(Student student);
+        Task DeleteStudentById(int id);
     }
 }

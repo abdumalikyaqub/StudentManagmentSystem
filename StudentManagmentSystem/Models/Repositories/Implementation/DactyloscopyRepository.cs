@@ -1,4 +1,5 @@
-﻿using StudentManagmentSystem.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentManagmentSystem.Models.Entities;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
 
 namespace StudentManagmentSystem.Models.Repositories.Implementation
@@ -11,20 +12,20 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             _context = context;
         }
 
-        public void AddDactyloscopy(Dactyloscopy dactyloscopy)
+        public async Task AddDactyloscopy(Dactyloscopy dactyloscopy)
         {
             _context.Dactyloscopies.Add(dactyloscopy);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public List<Dactyloscopy> GetAll()
+        public async Task<List<Dactyloscopy>> GetAll()
         {
-            return _context.Dactyloscopies.ToList();
+            return await _context.Dactyloscopies.ToListAsync();
         }
 
-        public Dactyloscopy GetById(int id)
+        public async Task<Dactyloscopy> GetById(int id)
         {
-            return _context.Dactyloscopies.Find(id);
+            return await _context.Dactyloscopies.FindAsync(id);
         }
     }
 }

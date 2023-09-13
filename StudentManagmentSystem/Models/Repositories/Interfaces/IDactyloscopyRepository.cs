@@ -4,8 +4,8 @@ namespace StudentManagmentSystem.Models.Repositories.Interfaces
 {
     public interface IDactyloscopyRepository
     {
-        List<Dactyloscopy> GetAll();
-        Dactyloscopy GetById(int id);
-        void AddDactyloscopy(Dactyloscopy dactyloscopy);
+        Task<List<Dactyloscopy>> GetAll();
+        Task<Dactyloscopy> GetById(int id);
+        Task AddDactyloscopy(Dactyloscopy dactyloscopy);
     }
 }

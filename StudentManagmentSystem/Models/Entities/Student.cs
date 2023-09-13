@@ -11,13 +11,14 @@ namespace StudentManagmentSystem.Models.Entities
         public string? SecondName { get; set; }
         public string? LastName { get; set; }
         public int? CountryId { get; set; }
+        public int? Gender { get; set; }
         public string? Birthday { get; set; }
         public string? PassportData { get; set; }
-        public int? EducationId { get; set; }
-        public int? RegistrationId { get; set; }
+        //public int? EducationId { get; set; }
+        //public int? RegistrationId { get; set; }
         public string? FamilyStatus { get; set; }
         public int? DocumentId { get; set; }
-        public int? DactyloscopyId { get; set; }
-        public int? OrderId { get; set; }
+        //public int? DactyloscopyId { get; set; }
+        //public int? OrderId { get; set; }
     }
 }

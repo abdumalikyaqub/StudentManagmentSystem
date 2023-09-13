@@ -1,4 +1,5 @@
-﻿using StudentManagmentSystem.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentManagmentSystem.Models.Entities;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
 
 namespace StudentManagmentSystem.Models.Repositories.Implementation
@@ -10,20 +11,20 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
         {
             _context = context;
         }
-        public void AddEducation(Education education)
+        public async Task AddEducation(Education education)
         {
             _context.Educations.Add(education);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public List<Education> GetAll()
+        public async Task<List<Education>> GetAll()
         {
-            return _context.Educations.ToList();
+            return await _context.Educations.ToListAsync();
         }
 
-        public Education GetById(int id)
+        public async Task<Education> GetById(int id)
         {
-            return _context.Educations.Find(id);
+            return await _context.Educations.FindAsync(id);
         }
     }
 }
