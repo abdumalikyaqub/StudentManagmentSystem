@@ -22,9 +22,16 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             return await _context.Educations.ToListAsync();
         }
 
-        public async Task<Education> GetById(int id)
+        public async Task<Education> GetById(int? id)
         {
-            return await _context.Educations.FindAsync(id);
+            return await _context.Educations.FirstOrDefaultAsync(e => e.StudentId == id);
+        }
+
+        public async Task UpdateEducation(Education education)
+        {
+            //_context.Educations.Update(education);
+            _context.Entry(education).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

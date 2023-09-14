@@ -1,0 +1,55 @@
+﻿@model StudentManagmentSystem.Models.ViewModels.StudentDetailsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Edit</h1>
+
+<h4>@ViewBag.ErrorMess</h4>
+<h4>Студент</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Student.StudentId" class="control-label">Имя клиента</label>
+                <input asp-for="Student.StudentId" class="form-control" />
+                <span asp-validation-for="Student.StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.FirstName" class="control-label">Имя клиента</label>
+                <input asp-for="Student.FirstName" class="form-control" />
+                <span asp-validation-for="Student.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.LastName" class="control-label">Фамилия клиента</label>
+                <input asp-for="Student.LastName" class="form-control" />
+                <span asp-validation-for="Student.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dactyloscopy.Status" class="control-label">Dactyloscopy</label>
+                <input asp-for="Dactyloscopy.Status" class="form-control" />
+                <span asp-validation-for="Dactyloscopy.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Education.EducationFormId" class="control-label">EducationFormId</label>
+                <input asp-for="Education.EducationFormId" class="form-control" />
+                <span asp-validation-for="Education.EducationFormId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Education.InstituteId" class="control-label">InstituteId</label>
+                <input asp-for="Education.InstituteId" class="form-control" />
+                <span asp-validation-for="Education.InstituteId" class="text-danger"></span>
+
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-primary">Назад</a>
+            </div>
+        </form>
+    </div>
+</div>

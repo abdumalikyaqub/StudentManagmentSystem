@@ -23,9 +23,16 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             return await _context.Dactyloscopies.ToListAsync();
         }
 
-        public async Task<Dactyloscopy> GetById(int id)
+        public async Task<Dactyloscopy> GetById(int? id)
         {
-            return await _context.Dactyloscopies.FindAsync(id);
+            return await _context.Dactyloscopies.FirstOrDefaultAsync(e => e.StudentId == id);
+        }
+
+        public async Task UpdateDactylos(Dactyloscopy dactyloscopy)
+        {
+            //_context.Dactyloscopies.Update(dactyloscopy);
+            _context.Entry(dactyloscopy).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

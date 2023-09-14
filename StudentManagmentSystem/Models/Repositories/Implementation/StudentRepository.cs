@@ -23,9 +23,13 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             _context.Students.Remove(student);
         }
 
-        public async Task<Student> GetStudentById(int id)
+        public async Task<Student> GetStudentById(int? id)
         {
-            return await (Task<Student>)_context.Students.Where(e => e.StudentId == id);
+            return await _context.Students.FirstOrDefaultAsync(e => e.StudentId == id);
+        }
+        public async Task<List<Student>> GetStudents()
+        {
+            return await (Task<List<Student>>)_context.Students.ToListAsync();
         }
 
         public async Task<bool> IsStudentById(int id)
@@ -35,7 +39,8 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task UpdateStudent(Student student)
         {
-            _context.Students.Update(student);
+            //_context.Students.Update(student);
+            _context.Entry(student).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

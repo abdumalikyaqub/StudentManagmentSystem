@@ -12,7 +12,7 @@ namespace StudentManagmentSystem.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
             bool isAvalaible = Database.CanConnect();
             // bool isAvalaible2 = await db.Database.CanConnectAsync();
             if (isAvalaible) Console.WriteLine("База данных доступна");
