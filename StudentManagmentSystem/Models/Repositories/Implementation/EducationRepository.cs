@@ -29,8 +29,8 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task UpdateEducation(Education education)
         {
-            //_context.Educations.Update(education);
-            _context.Entry(education).State = EntityState.Modified;
+            _context.Update(education);
+            //_context.Entry(education).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

@@ -22,6 +22,22 @@ namespace StudentManagmentSystem.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("StudentManagmentSystem.Models.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
             modelBuilder.Entity("StudentManagmentSystem.Models.Entities.Dactyloscopy", b =>
                 {
                     b.Property<int>("Id")
@@ -41,6 +57,8 @@ namespace StudentManagmentSystem.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("StudentId");
+
                     b.ToTable("Dactyloscopies");
                 });
 
@@ -51,6 +69,9 @@ namespace StudentManagmentSystem.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("EducationBasisId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("EducationFormId")
                         .HasColumnType("integer");
@@ -68,6 +89,8 @@ namespace StudentManagmentSystem.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Educations");
                 });
@@ -108,11 +131,50 @@ namespace StudentManagmentSystem.Migrations
                         .HasColumnType("text");
 
                     b.Property<int?>("StudentId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CountryId");
+
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("StudentManagmentSystem.Models.Entities.Dactyloscopy", b =>
+                {
+                    b.HasOne("StudentManagmentSystem.Models.Entities.Student", "Student")
+                        .WithMany("Dactyloscopies")
+                        .HasForeignKey("StudentId")
+                        .HasPrincipalKey("StudentId");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("StudentManagmentSystem.Models.Entities.Education", b =>
+                {
+                    b.HasOne("StudentManagmentSystem.Models.Entities.Student", "Student")
+                        .WithMany("Educations")
+                        .HasForeignKey("StudentId")
+                        .HasPrincipalKey("StudentId");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("StudentManagmentSystem.Models.Entities.Student", b =>
+                {
+                    b.HasOne("StudentManagmentSystem.Models.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("StudentManagmentSystem.Models.Entities.Student", b =>
+                {
+                    b.Navigation("Dactyloscopies");
+
+                    b.Navigation("Educations");
                 });
 #pragma warning restore 612, 618
         }

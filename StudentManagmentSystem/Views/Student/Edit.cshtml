@@ -1,4 +1,4 @@
-﻿@model StudentManagmentSystem.Models.ViewModels.StudentDetailsViewModel
+﻿@model StudentManagmentSystem.Models.Entities.Student
 
 @{
     ViewData["Title"] = "Create";
@@ -13,37 +13,56 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Student.StudentId" class="control-label">Имя клиента</label>
-                <input asp-for="Student.StudentId" class="form-control" />
-                <span asp-validation-for="Student.StudentId" class="text-danger"></span>
+                <label asp-for="StudentId" class="control-label">Имя клиента</label>
+                <input asp-for="StudentId" class="form-control" />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.FirstName" class="control-label">Имя клиента</label>
-                <input asp-for="Student.FirstName" class="form-control" />
-                <span asp-validation-for="Student.FirstName" class="text-danger"></span>
+                <label asp-for="FirstName" class="control-label">Имя клиента</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.LastName" class="control-label">Фамилия клиента</label>
-                <input asp-for="Student.LastName" class="form-control" />
-                <span asp-validation-for="Student.LastName" class="text-danger"></span>
+                <label asp-for="LastName" class="control-label">Фамилия клиента</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Dactyloscopy.Status" class="control-label">Dactyloscopy</label>
-                <input asp-for="Dactyloscopy.Status" class="form-control" />
-                <span asp-validation-for="Dactyloscopy.Status" class="text-danger"></span>
+                <label asp-for="CountryId" class="control-label"></label>
+                <select asp-for="CountryId" asp-items="@(ViewBag.CountryList)" class="form-control"></select>
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+                <label asp-for="InstituteId">ID института</label>
+                <input asp-for="InstituteId" class="form-control" />
+                <span asp-validation-for="InstituteId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Education.EducationFormId" class="control-label">EducationFormId</label>
-                <input asp-for="Education.EducationFormId" class="form-control" />
-                <span asp-validation-for="Education.EducationFormId" class="text-danger"></span>
+                <label asp-for="DactyloscopyStatus">Статус Dactyloscopy</label>
+                <input asp-for="DactyloscopyStatus" class="form-control" />
+                <span asp-validation-for="DactyloscopyStatus" class="text-danger"></span>
+            </div> *@
+            <input asp-for="Dactyloscopies[0].Id" />
+            <input asp-for="Dactyloscopies[0].StudentId" />
+            <div class="form-group">
+                <label asp-for="Dactyloscopies[0].Status" class="control-label">Dactyloscopy</label>
+                <input asp-for="Dactyloscopies[0].Status" class="form-control" />
+                <span asp-validation-for="Dactyloscopies[0].Status" class="text-danger"></span>
+            </div>
+            <input asp-for="Educations[0].Id" />
+            <input asp-for="Educations[0].StudentId" />
+            <div class="form-group">
+                <label asp-for="Educations[0].EducationFormId" class="control-label">EducationFormId</label>
+                <input asp-for="Educations[0].EducationFormId" class="form-control" />
+                <span asp-validation-for="Educations[0].EducationFormId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Education.InstituteId" class="control-label">InstituteId</label>
-                <input asp-for="Education.InstituteId" class="form-control" />
-                <span asp-validation-for="Education.InstituteId" class="text-danger"></span>
-
+                <label asp-for="Educations[0].InstituteId" class="control-label">InstituteId</label>
+                <input asp-for="Educations[0].InstituteId" class="form-control" />
+                <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">

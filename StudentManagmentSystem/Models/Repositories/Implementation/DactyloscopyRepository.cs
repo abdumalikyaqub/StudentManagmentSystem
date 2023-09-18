@@ -30,8 +30,8 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task UpdateDactylos(Dactyloscopy dactyloscopy)
         {
-            //_context.Dactyloscopies.Update(dactyloscopy);
-            _context.Entry(dactyloscopy).State = EntityState.Modified;
+            _context.Update(dactyloscopy);
+            //_context.Entry(dactyloscopy).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

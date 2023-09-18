@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StudentManagmentSystem.Models.Entities;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
@@ -11,126 +13,154 @@ namespace StudentManagmentSystem.Controllers
         private IStudentRepository _studentRepository;
         private IEducationRepository _educationRepository;
         private IDactyloscopyRepository _dactyloscopyRepository;
-        public StudentController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository)
+        private ICountryRepository _countryRepository;
+        private readonly IMapper _mapper;
+
+        public StudentController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository, IMapper mapper)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;
             _dactyloscopyRepository = dactyloscopyRepository;
+            _countryRepository = countryRepository;
+            _mapper = mapper;
+
         }
 
         public async Task<IActionResult> Index()
         {
             var students = await _studentRepository.GetStudents();
 
-            var studentDetails = new List<StudentDetailsViewModel>();
-
-            foreach (var student in students)
-            {
-                var dactylos = await _dactyloscopyRepository.GetById(student.StudentId);
-                var education = await _educationRepository.GetById(student.StudentId);
-               
-                var studentDetail = new StudentDetailsViewModel 
-                {
-                    Student = student,
-                    Education = education,
-                    Dactyloscopy = dactylos
-                };
-                studentDetails.Add(studentDetail);
-            }
-
-            return View(studentDetails);
+            return View(students);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            //var countries = await _countryRepository.GetCountries();
+            //ViewBag.CountryList = new SelectList(countries, "Id", "Title");
+            ViewBag.CountryList = _studentRepository.GetCountries();
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(StudentDetailsViewModel studentDetails)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Student student)
         {
-            var rand = new Random();
-            bool t = true;
-            while (t)
+            if (ModelState.IsValid)
             {
-                int studentId = rand.Next(1000, 9999);
-                bool student = await _studentRepository.IsStudentById(studentId);
-                if (!student)
+                var rand = new Random();
+                bool t = true;
+                while (t)
                 {
-                    studentDetails.Student.StudentId = studentId;
-                    studentDetails.Education.StudentId = studentId;
-                    studentDetails.Dactyloscopy.StudentId = studentId;
-                    t = false;
+                    int studentId = rand.Next(1000, 9999);
+                    bool is_student = await _studentRepository.IsStudentById(studentId);
+                    if (!is_student)
+                    {
+                        student.StudentId = studentId;
+                        //education.StudentId = studentId;
+                        //dactyloscopy.StudentId = studentId;
+                        t = false;
+                    }
                 }
+
+                await _studentRepository.AddStudent(student);
+                //await _educationRepository.AddEducation(education);
+                //await _dactyloscopyRepository.AddDactyloscopy(dactyloscopy);
+                
+
+                return RedirectToAction(nameof(Edit), new { id = student.StudentId });
             }
-            await _educationRepository.AddEducation(studentDetails.Education);
-            await _dactyloscopyRepository.AddDactyloscopy(studentDetails.Dactyloscopy);
-            await _studentRepository.AddStudent(studentDetails.Student);
-            return RedirectToAction(nameof(Edit), new { id = studentDetails.Student.StudentId });
+
+            var countries = await _countryRepository.GetCountries();
+            ViewBag.CountryList = new SelectList(countries, "Id", "Title");
+
+            return View(student);
         }
-
-        public async Task<ActionResult> Edit(int id)
+        [HttpGet]
+        public async Task<ActionResult> Edit(int? id)
         {
-            var student = await _studentRepository.GetStudentById(id);
-            var dactylos = await _dactyloscopyRepository.GetById(id);
-            var education = await _educationRepository.GetById(id);
-
-            var studentDetails = new StudentDetailsViewModel
-            {
-                Student = student,
-                Dactyloscopy = dactylos,
-                Education = education
-            };
-
-            if (studentDetails == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            return View(studentDetails);
+
+            var student = await _studentRepository.StudentById(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            var countries = await _countryRepository.GetCountries();
+            ViewBag.CountryList = new SelectList(countries, "Id", "Title");
+            //var viewModel = _mapper.Map<StudentEditViewModel>(student);
+            //var countries = _studentRepository.GetCountries();
+            //viewModel.Countries = countries;
+
+            return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(StudentDetailsViewModel studentDetails)
+        public async Task<ActionResult> Edit(int id, Student student)
         {
-            
+
+            //if (id != viewModel.StudentId)
+            //{
+            //    return BadRequest();
+            //}
+
+            //if (ModelState.IsValid)
+            //{
+            //    var student = _mapper.Map<Student>(viewModel);
+            //    await _studentRepository.UpdateStudent(student);
+            //    return RedirectToAction("Index");
+            //}
+
+            //var countries = _studentRepository.GetCountries();
+            //viewModel.Countries = countries;
+            //return View(viewModel);
+
+            if (id != student.StudentId)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                // Проверьте, существует ли студент в базе данных
-                //var existingStudent = await _studentRepository.GetStudentById(studentDetails.Student.StudentId);
-                //if (existingStudent == null)
+                //try
                 //{
-                //    return NotFound();
-                //}
+                    await _studentRepository.UpdateStudent(student);
+                    // await _dactyloscopyRepository.UpdateDactylos(dactyloscopy);
+                    // await _educationRepository.UpdateEducation(education);
 
-                //// Проверьте, существует ли Dactyloscopy в базе данных
-                //var existingDactyloscopy = await _dactyloscopyRepository.GetById(studentDetails.Dactyloscopy.StudentId);
-                //if (existingDactyloscopy == null)
+                //}
+                //catch (DbUpdateConcurrencyException)
                 //{
-                //    return NotFound();
+                //    bool is_student = await _studentRepository.IsStudentById((int)student.StudentId);
+                //    if (!is_student)
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
                 //}
-
-                //// Проверьте, существует ли Education в базе данных
-                //var existingEducation = await _educationRepository.GetById(studentDetails.Education.StudentId);
-                //if (existingEducation == null)
-                //{
-                //    return NotFound();
-                //}
-
-                await _studentRepository.UpdateStudent(studentDetails.Student);
-                //await _dactyloscopyRepository.UpdateDactylos(studentDetails.Dactyloscopy);
-                //await _educationRepository.UpdateEducation(studentDetails.Education);
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
-            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            {
-                var errorMessage = error.ErrorMessage;
-                ViewBag.ErrorMess = errorMessage;
-            }
+            //foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            //{
+            //    var errorMessage = error.ErrorMessage;
+            //    ViewBag.ErrorMess = errorMessage;
+            //}
 
-            return View(studentDetails);
+            var countries = await _countryRepository.GetCountries();
+            ViewBag.CountryList = new SelectList(countries, "Id", "Title");
+
+            return View(student);
         }
+       
     }
 }
