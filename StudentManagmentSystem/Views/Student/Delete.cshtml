@@ -1,0 +1,21 @@
+﻿@model StudentManagmentSystem.Models.Entities.Student
+
+<h2>Удалить студента</h2>
+
+<div>
+    <h4>Вы уверены, что хотите удалить этого студента?</h4>
+    <dl class="dl-horizontal">
+        <dt>Имя:</dt>
+        <dd>@Model.FirstName</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.StudentId</dd>
+        <!-- Добавьте другие необходимые данные из объекта StudentDetailsViewModel -->
+    </dl>
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Удалить" class="btn btn-default" />
+    </form>
+</div>
+<div>
+    <a href="@Url.Action("Index")">Отмена</a>
+</div>

@@ -21,8 +21,12 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task DeleteStudentById(int id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
+            var student = await _context.Students.FirstOrDefaultAsync(e => e.StudentId == id);
+            if (student != null)
+            {
+                _context.Students.Remove(student);
+            }
+            
         }
 
         public async Task<Student> GetStudentById(int? id)

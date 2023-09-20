@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StudentManagmentSystem.Models.Entities;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
 using StudentManagmentSystem.Models.ViewModels;
@@ -26,9 +29,39 @@ namespace StudentManagmentSystem.Controllers
 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+
+            ViewBag.NameSortParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.CountrySortParam = sortOrder == "Country" ? "country_desc" : "Country";
+            //ViewBag.InstituteSortParam = sortOrder == "Institute" ? "institute_desc" : "Institute";
+
             var students = await _studentRepository.GetStudents();
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderBy(s => s.StudentId).ToList();
+                    //students.Sort();
+                    break;
+                //case "Country":
+                //    students = (List<Student>)students.OrderBy(s => s.Country.Title);
+                //    break;
+                //case "country_desc":
+                //    students = (List<Student>)students.OrderByDescending(s => s.Country.Title);
+                //    break;
+                //case "Institute":
+                //    students = students.OrderBy(s => s.Educations.Find(e => e.InstituteId));
+                //    break;
+                //case "institute_desc":
+                //    students = students.OrderByDescending(s => s.Education.Institute);
+                //    break;
+                default:
+                    students = students.OrderBy(s => s.FirstName).ToList();
+                    
+                    //students.Sort();
+                    break;
+            }
 
             return View(students);
         }
@@ -161,6 +194,85 @@ namespace StudentManagmentSystem.Controllers
 
             return View(student);
         }
-       
+
+        public async  Task<ActionResult> Search(int? studentId)
+        {
+            if (studentId == null)
+            {
+                // Возвращайте представление для поиска, если параметр studentId не указан
+                return View();
+            }
+
+            var student = await _studentRepository.StudentById(studentId);
+
+            if (student == null)
+            {
+                // Возвращайте представление с сообщением, если студент не найден
+                ViewBag.Message = "Студент не найден.";
+                return View();
+            }
+
+            return View(student);
+        }
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            var studentDetails = await _studentRepository.StudentById(id);
+            if (studentDetails == null)
+            {
+                return NotFound();
+            }
+            return View(studentDetails);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            var studentDetails = await _studentRepository.StudentById(id);
+            if (studentDetails != null)
+            {
+                await _studentRepository.DeleteStudentById(id);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(studentDetails);
+        }
+
+        public async Task<IActionResult> Reports()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> GeneratePdfReport()
+        {
+            var students = await _studentRepository.GetStudents();
+
+            using (var stream = new MemoryStream())
+            {
+                var document = new iTextSharp.text.Document();
+                PdfWriter.GetInstance(document, stream);
+                document.Open();
+
+                // Добавьте содержимое PDF-отчета, например, таблицу со списком студентов
+                var table = new PdfPTable(2);
+                table.AddCell("Id");
+                table.AddCell("Имя");
+
+                foreach (var student in students)
+                {
+                    table.AddCell(student.StudentId.ToString());
+                    table.AddCell(student.FirstName);
+                }
+
+                document.Add(table);
+                document.Close();
+
+                var content = stream.ToArray();
+                Response.Headers["Content-Disposition"] = "inline; filename=StudentReport.pdf";
+                return File(content, "application/pdf", "StudentReport.pdf");
+            }
+        }
+
+
     }
 }

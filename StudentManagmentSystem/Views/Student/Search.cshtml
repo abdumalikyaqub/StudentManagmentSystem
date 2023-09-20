@@ -1,0 +1,27 @@
+﻿@model StudentManagmentSystem.Models.Entities.Student
+
+<h2>Поиск студента по ID</h2>
+
+<form method="get" action="@Url.Action("Search")">
+    <div class="form-group">
+        <label for="studentId" class="control-label">Student ID:</label>
+        <input type="text" id="studentId" name="studentId" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
+@if (Model != null)
+{
+    <h3>Результаты поиска:</h3>
+    <dl class="dl-horizontal">
+        <dt>Имя:</dt>
+        <dd>@Model.FirstName</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.SecondName</dd>
+        <!-- Добавьте другие необходимые данные из объекта StudentDetailsViewModel -->
+    </dl>
+}
+else if (ViewBag.Message != null)
+{
+    <p class="text-danger">@ViewBag.Message</p>
+}

@@ -39,4 +39,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+//app.MapControllerRoute(
+//    name: "Reports",
+//    pattern: "Student/GeneratePdfReport",
+//    defaults: new { controller = "Student", action = "GeneratePdfReport" }
+//);
+
 app.Run();

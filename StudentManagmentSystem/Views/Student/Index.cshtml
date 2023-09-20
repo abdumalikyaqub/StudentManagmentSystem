@@ -5,6 +5,15 @@
 }
 <h1>Index</h1>
 
+<p>
+    @Html.ActionLink("Имя", "Index", new { sortOrder = ViewBag.NameSortParam })
+    |
+    @* @Html.ActionLink("Страна", "Index", new { sortOrder = ViewBag.CountrySortParam }) *@
+    
+    @* @Html.ActionLink("Институт", "Index", new { sortOrder = ViewBag.InstituteSortParam }) *@
+</p>
+
+
 <h2>Список студентов</h2>
 
 <table class="table">
