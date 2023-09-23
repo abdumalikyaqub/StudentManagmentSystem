@@ -10,6 +10,9 @@ namespace StudentManagmentSystem.Models.Repositories.Interfaces
         Task<Student> StudentById(int? id);
         Task<List<Student>> GetStudents();
         List<SelectListItem> GetCountries();
+        List<SelectListItem> GetInstitutes();
+        List<SelectListItem> GetSpecialities();
+        List<SelectListItem> GetSpecializations();
         Task<bool> IsStudentById(int id);
         Task UpdateStudent(Student student);
         Task DeleteStudentById(int id);

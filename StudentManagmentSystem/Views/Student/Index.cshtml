@@ -18,14 +18,14 @@
 
 <table class="table">
     <tr>
-        <th>Id</th>
+        <th>№</th>
         <th>Имя</th>
         <th>Фамилия</th>
-        <th>Страна</th>
-        <th>DactylosId</th>
-        <th>DactylosStatus</th>
-        <th>EduId</th>
-        <th>EduInstitute</th>
+        <th>Отчество</th>
+        <th>Гражданство</th>
+        <th>Институт</th>
+        <th>Дактилоскопия</th>
+        <th>Тел. номер</th>
         <th></th>
     </tr>
     @foreach (var student in Model)
@@ -33,33 +33,40 @@
         <tr>
             <td>@student.Id</td>
             <td>@student.FirstName</td>
+            <td>@student.SecondName</td>
             <td>@student.LastName</td>
-            <td>@student.Country.Title</td>
-            @if (student.Dactyloscopies != null)
+            @* <td>@student.Country.Title</td> *@
+            @if (student.Country != null)
             {
-                <td>@student.Dactyloscopies.FirstOrDefault()?.StudentId</td>
-                <td>@student.Dactyloscopies.FirstOrDefault()?.Status</td>
+                <td>@student.Country.Title</td>
             }
             else
             {
                 <td>н/д</td>
-                <td>н/д</td>
             }
-            @if (student.Educations != null)
+            @if (student.Educations.FirstOrDefault()?.InstituteId != null)
             {
-                <td>@student.Educations.FirstOrDefault()?.StudentId</td>
                 <td>@student.Educations.FirstOrDefault()?.InstituteId</td>
             }
             else
             {
                 <td>н/д</td>
-                <td>н/д</td>
             }
 
+            @if (student.Dactyloscopies != null)
+            {
+                <td>@student.Dactyloscopies.FirstOrDefault()?.Status</td>
+            }
+            else
+            {
+                <td>н/д</td>
+            }
+            <td>@student.Phone</td>
+
             <td>
-                @Html.ActionLink("Подробнее", "Details", new { id = student.Id })
-                @Html.ActionLink("Редактировать", "Edit", new { id = student.Id })
-                @Html.ActionLink("Удалить", "Delete", new { id = student.Id })
+                @Html.ActionLink("Подробнее", "Details", new { id = student.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Редактировать", "Edit", new { id = student.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Удалить", "Delete", new { id = student.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }

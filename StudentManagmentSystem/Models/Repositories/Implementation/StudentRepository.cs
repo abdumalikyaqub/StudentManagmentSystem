@@ -41,6 +41,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
         {
            
             return await _context.Students
+                .Include(s => s.Country)
                 .Include(s => s.Educations)
                 .Include(s => s.Dactyloscopies)
                 .FirstOrDefaultAsync(e => e.Id == id);
@@ -122,6 +123,51 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             }).ToList();
 
             return countryItems;
+        }
+
+        public List<SelectListItem> GetInstitutes()
+        {
+            // Получить список стран из базы данных
+            var institutes = _context.Institutes.ToList();
+
+            // Преобразовать список стран в SelectListItem
+            var instituteItems = institutes.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Title
+            }).ToList();
+
+            return instituteItems;
+        }
+
+        public List<SelectListItem> GetSpecialities()
+        {
+            // Получить список стран из базы данных
+            var specialities = _context.Specialities.ToList();
+
+            // Преобразовать список стран в SelectListItem
+            var specialityItems = specialities.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Title
+            }).ToList();
+
+            return specialityItems;
+        }
+
+        public List<SelectListItem> GetSpecializations()
+        {
+            // Получить список стран из базы данных
+            var specializations = _context.Specializations.ToList();
+
+            // Преобразовать список стран в SelectListItem
+            var specializationItems = specializations.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Title
+            }).ToList();
+
+            return specializationItems;
         }
     }
 }

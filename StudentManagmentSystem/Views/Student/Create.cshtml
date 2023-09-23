@@ -6,7 +6,7 @@
     ViewData["Title"] = "Добавить";
 }
 
-<h1>Добавить нового студента</h1>
+<h2>Добавить нового студента</h2>
 
 <hr />
 <div class="row">
@@ -67,7 +67,7 @@
                 <div class="col-sm-3">
                     <label asp-for="CountryId" class="control-label">Гражданство</label>
                     <select asp-for="CountryId" asp-items="@(ViewBag.CountryList)" class="form-control"></select>
-                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                    @* <span asp-validation-for="CountryId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
                     <label asp-for="DocumentId" class="control-label">Тип документа</label>
@@ -106,13 +106,13 @@
                 </div>
                 <div class="col-sm-3">
                     <label asp-for="Educations[0].InstituteId" class="control-label">InstituteId</label>
-                    <input asp-for="Educations[0].InstituteId" class="form-control" />
-                    <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span>
+                    <select asp-for="Educations[0].InstituteId" asp-items="@(ViewBag.InstituteList)" class="form-control"></select>
+                    @* <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
                     <label asp-for="Educations[0].SpecialityId" class="control-label">SpecialityId</label>
-                    <input asp-for="Educations[0].SpecialityId" class="form-control" />
-                    <span asp-validation-for="Educations[0].SpecialityId" class="text-danger"></span>
+                    <select asp-for="Educations[0].SpecialityId" asp-items="@(ViewBag.SpecialityList)" class="form-control"></select>
+                    @* <span asp-validation-for="Educations[0].SpecialityId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
                     <label asp-for="Educations[0].GroupName" class="control-label">GroupName</label>
@@ -124,8 +124,8 @@
             <div class="row g-3">
                 <div class="col-sm-3">
                     <label asp-for="Educations[0].SpecializationId" class="control-label">SpecializationId</label>
-                    <input asp-for="Educations[0].SpecializationId" class="form-control" />
-                    <span asp-validation-for="Educations[0].SpecializationId" class="text-danger"></span>
+                    <select asp-for="Educations[0].SpecializationId" asp-items="@(ViewBag.SpecializationList)" class="form-control"></select>
+                    @* <span asp-validation-for="Educations[0].SpecializationId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
                     <label asp-for="Educations[0].EducationLevelId" class="control-label">EducationLevelId</label>

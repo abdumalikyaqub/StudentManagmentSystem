@@ -65,6 +65,9 @@ namespace StudentManagmentSystem.Controllers
         public async Task<IActionResult> Create()
         {
             ViewBag.CountryList = _studentRepository.GetCountries();
+            ViewBag.InstituteList = _studentRepository.GetInstitutes();
+            ViewBag.SpecialityList = _studentRepository.GetSpecialities();
+            ViewBag.SpecializationList = _studentRepository.GetSpecializations();
             return View();
         }
 
@@ -72,15 +75,19 @@ namespace StudentManagmentSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student student)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
 
                 await _studentRepository.AddStudent(student);
-                return RedirectToAction(nameof(Edit), new { id = student.Id });
-            }
+                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Edit), new { id = student.Id });
+            //}
 
             var countries = await _countryRepository.GetCountries();
             ViewBag.CountryList = new SelectList(countries, "Id", "Title");
+            ViewBag.InstituteList = _studentRepository.GetInstitutes();
+            ViewBag.SpecialityList = _studentRepository.GetSpecialities();
+            ViewBag.SpecializationList = _studentRepository.GetSpecializations();
 
             return View(student);
         }
@@ -99,7 +106,8 @@ namespace StudentManagmentSystem.Controllers
                 return NotFound();
             }
 
-            var countries = await _countryRepository.GetCountries();
+            //var countries = await _countryRepository.GetCountries();
+            ViewBag.CountryList = _studentRepository.GetCountries();
             return View(student);
         }
 

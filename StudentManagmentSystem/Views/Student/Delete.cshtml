@@ -5,17 +5,23 @@
 <div>
     <h4>Вы уверены, что хотите удалить этого студента?</h4>
     <dl class="dl-horizontal">
+        <dt>№</dt>
+        <dd>@Model.Id</dd>
         <dt>Имя:</dt>
         <dd>@Model.FirstName</dd>
         <dt>Фамилия:</dt>
-        <dd>@Model.Id</dd>
+        <dd>@Model.SecondName</dd>
+        <dt>Страна:</dt>
+        <dd>@(Model.Country.Title != null ? Model.Country.Title : "н/д")</dd>
         <!-- Добавьте другие необходимые данные из объекта StudentDetailsViewModel -->
     </dl>
     <form method="post">
         @Html.AntiForgeryToken()
-        <input type="submit" value="Удалить" class="btn btn-default" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a href="@Url.Action("Index")" class="btn btn-primary">Отмена</a>
     </form>
 </div>
+<br />
 <div>
-    <a href="@Url.Action("Index")">Отмена</a>
+    
 </div>
