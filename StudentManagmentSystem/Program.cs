@@ -15,7 +15,6 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IDactyloscopyRepository, DactyloscopyRepository>();
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
-builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
 
 var app = builder.Build();

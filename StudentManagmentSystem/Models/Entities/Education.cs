@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StudentManagmentSystem.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace StudentManagmentSystem.Models.Entities
 {
@@ -8,11 +9,20 @@ namespace StudentManagmentSystem.Models.Entities
         public int Id { get; set; }
        // public int EducationId { get; set; }
         public int? StudentId { get; set; }
-        public int? EducationFormId { get; set; }
-        public int? EducationLevelId { get; set; }
-        public int? EducationBasisId { get; set; }
-        public string? Status { get; set; }
+        public string? EntryYear { get; set; }
+        public string? GroupName { get; set; }
+        public EducationForm? EducationFormId { get; set; }
+        public EducationLevel? EducationLevelId { get; set; }
+        public EducationBasis? EducationBasisId { get; set; }
+        public EducationStatus? StatusId { get; set; }
         public int? InstituteId { get; set; }
+        public int? SpecializationId { get; set; }
+        public int? SpecialityId { get; set; }
+
+
         public Student? Student { get; set; }
+        public Institute? Institute { get; set; }
+        public Speciality? Speciality { get; set; }
+        public Specialization? Specialization { get; set; }
     }
 }

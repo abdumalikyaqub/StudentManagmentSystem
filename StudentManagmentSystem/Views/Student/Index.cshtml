@@ -31,7 +31,7 @@
     @foreach (var student in Model)
     {
         <tr>
-            <td>@student.StudentId</td>
+            <td>@student.Id</td>
             <td>@student.FirstName</td>
             <td>@student.LastName</td>
             <td>@student.Country.Title</td>
@@ -57,9 +57,9 @@
             }
 
             <td>
-                @Html.ActionLink("Подробнее", "Details", new { id = student.StudentId })
-                @Html.ActionLink("Редактировать", "Edit", new { id = student.StudentId })
-                @Html.ActionLink("Удалить", "Delete", new { id = student.StudentId })
+                @Html.ActionLink("Подробнее", "Details", new { id = student.Id })
+                @Html.ActionLink("Редактировать", "Edit", new { id = student.Id })
+                @Html.ActionLink("Удалить", "Delete", new { id = student.Id })
             </td>
         </tr>
     }

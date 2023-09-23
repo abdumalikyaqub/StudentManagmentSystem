@@ -21,7 +21,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task DeleteStudentById(int id)
         {
-            var student = await _context.Students.FirstOrDefaultAsync(e => e.StudentId == id);
+            var student = await _context.Students.FirstOrDefaultAsync(e => e.Id == id);
             if (student != null)
             {
                 _context.Students.Remove(student);
@@ -29,13 +29,10 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             
         }
 
-        public async Task<Student> GetStudentById(int? id)
+        public async Task<List<Student>> GetStudentBySecondName(string? secondname)
         {
             var student = await _context.Students
-                .Include(s => s.Country)
-                .Include(s => s.Dactyloscopies)
-                .Include(s => s.Educations)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(m => m.SecondName.ToLower() == secondname.ToLower()).ToListAsync();
 
             return student;
             //return await _context.Students.FirstOrDefaultAsync(e => e.StudentId == id);
@@ -46,7 +43,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             return await _context.Students
                 .Include(s => s.Educations)
                 .Include(s => s.Dactyloscopies)
-                .FirstOrDefaultAsync(e => e.StudentId == id);
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<List<Student>> GetStudents()
@@ -63,7 +60,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task<bool> IsStudentById(int id)
         {
-            return await _context.Students.AnyAsync(e => e.StudentId == id);
+            return await _context.Students.AnyAsync(e => e.Id == id);
         }
 
         public async Task UpdateStudent(Student student)
@@ -72,12 +69,12 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
                 .Include(s => s.Country)
                 .Include(s => s.Educations)
                 .Include(s => s.Dactyloscopies)
-                .FirstOrDefaultAsync(e => e.StudentId == student.StudentId);
+                .FirstOrDefaultAsync(e => e.Id == student.Id);
 
             if (student_info != null)
             {
                 //student_info.Id = student.Id;
-                student_info.StudentId = student.StudentId;
+                //student_info.StudentId = student.Id;
                 student_info.FirstName = student.FirstName;
                 student_info.LastName = student.LastName;
                 student_info.CountryId = student.CountryId;

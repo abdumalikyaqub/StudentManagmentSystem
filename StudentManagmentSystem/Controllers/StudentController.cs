@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using iTextSharp.text.pdf;
+﻿using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StudentManagmentSystem.Models.Entities;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
-using StudentManagmentSystem.Models.ViewModels;
 
 namespace StudentManagmentSystem.Controllers
 {
@@ -17,15 +15,13 @@ namespace StudentManagmentSystem.Controllers
         private IEducationRepository _educationRepository;
         private IDactyloscopyRepository _dactyloscopyRepository;
         private ICountryRepository _countryRepository;
-        private readonly IMapper _mapper;
 
-        public StudentController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository, IMapper mapper)
+        public StudentController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;
             _dactyloscopyRepository = dactyloscopyRepository;
             _countryRepository = countryRepository;
-            _mapper = mapper;
 
         }
 
@@ -41,7 +37,7 @@ namespace StudentManagmentSystem.Controllers
             switch (sortOrder)
             {
                 case "name_desc":
-                    students = students.OrderBy(s => s.StudentId).ToList();
+                    students = students.OrderBy(s => s.Id).ToList();
                     //students.Sort();
                     break;
                 //case "Country":
@@ -68,10 +64,7 @@ namespace StudentManagmentSystem.Controllers
 
         public async Task<IActionResult> Create()
         {
-            //var countries = await _countryRepository.GetCountries();
-            //ViewBag.CountryList = new SelectList(countries, "Id", "Title");
             ViewBag.CountryList = _studentRepository.GetCountries();
-
             return View();
         }
 
@@ -81,27 +74,9 @@ namespace StudentManagmentSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var rand = new Random();
-                bool t = true;
-                while (t)
-                {
-                    int studentId = rand.Next(1000, 9999);
-                    bool is_student = await _studentRepository.IsStudentById(studentId);
-                    if (!is_student)
-                    {
-                        student.StudentId = studentId;
-                        //education.StudentId = studentId;
-                        //dactyloscopy.StudentId = studentId;
-                        t = false;
-                    }
-                }
 
                 await _studentRepository.AddStudent(student);
-                //await _educationRepository.AddEducation(education);
-                //await _dactyloscopyRepository.AddDactyloscopy(dactyloscopy);
-                
-
-                return RedirectToAction(nameof(Edit), new { id = student.StudentId });
+                return RedirectToAction(nameof(Edit), new { id = student.Id });
             }
 
             var countries = await _countryRepository.GetCountries();
@@ -125,11 +100,6 @@ namespace StudentManagmentSystem.Controllers
             }
 
             var countries = await _countryRepository.GetCountries();
-            ViewBag.CountryList = new SelectList(countries, "Id", "Title");
-            //var viewModel = _mapper.Map<StudentEditViewModel>(student);
-            //var countries = _studentRepository.GetCountries();
-            //viewModel.Countries = countries;
-
             return View(student);
         }
 
@@ -138,81 +108,38 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> Edit(int id, Student student)
         {
 
-            //if (id != viewModel.StudentId)
-            //{
-            //    return BadRequest();
-            //}
-
-            //if (ModelState.IsValid)
-            //{
-            //    var student = _mapper.Map<Student>(viewModel);
-            //    await _studentRepository.UpdateStudent(student);
-            //    return RedirectToAction("Index");
-            //}
-
-            //var countries = _studentRepository.GetCountries();
-            //viewModel.Countries = countries;
-            //return View(viewModel);
-
-            if (id != student.StudentId)
+            if (id != student.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                //try
-                //{
-                    await _studentRepository.UpdateStudent(student);
-                    // await _dactyloscopyRepository.UpdateDactylos(dactyloscopy);
-                    // await _educationRepository.UpdateEducation(education);
-
-                //}
-                //catch (DbUpdateConcurrencyException)
-                //{
-                //    bool is_student = await _studentRepository.IsStudentById((int)student.StudentId);
-                //    if (!is_student)
-                //    {
-                //        return NotFound();
-                //    }
-                //    else
-                //    {
-                //        throw;
-                //    }
-                //}
+                await _studentRepository.UpdateStudent(student);
                 return RedirectToAction(nameof(Index));
             }
 
-            //foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            //{
-            //    var errorMessage = error.ErrorMessage;
-            //    ViewBag.ErrorMess = errorMessage;
-            //}
-
             var countries = await _countryRepository.GetCountries();
             ViewBag.CountryList = new SelectList(countries, "Id", "Title");
-
             return View(student);
         }
 
-        public async  Task<ActionResult> Search(int? studentId)
+        public async Task<ActionResult> Search(string? secondname)
         {
-            if (studentId == null)
+            if (secondname == null)
             {
-                // Возвращайте представление для поиска, если параметр studentId не указан
                 return View();
             }
 
-            var student = await _studentRepository.StudentById(studentId);
+            var students = await _studentRepository.GetStudentBySecondName(secondname);
 
-            if (student == null)
+            if (students == null)
             {
-                // Возвращайте представление с сообщением, если студент не найден
                 ViewBag.Message = "Студент не найден.";
                 return View();
             }
 
-            return View(student);
+            return View(students);
         }
 
         public async Task<ActionResult> Delete(int id)
@@ -253,14 +180,13 @@ namespace StudentManagmentSystem.Controllers
                 PdfWriter.GetInstance(document, stream);
                 document.Open();
 
-                // Добавьте содержимое PDF-отчета, например, таблицу со списком студентов
                 var table = new PdfPTable(2);
                 table.AddCell("Id");
                 table.AddCell("Имя");
 
                 foreach (var student in students)
                 {
-                    table.AddCell(student.StudentId.ToString());
+                    table.AddCell(student.Id.ToString());
                     table.AddCell(student.FirstName);
                 }
 

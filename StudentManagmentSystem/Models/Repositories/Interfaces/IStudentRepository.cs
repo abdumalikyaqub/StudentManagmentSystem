@@ -6,7 +6,7 @@ namespace StudentManagmentSystem.Models.Repositories.Interfaces
     public interface IStudentRepository
     {
         Task AddStudent(Student student);
-        Task<Student> GetStudentById(int? id);
+        Task<List<Student>> GetStudentBySecondName(string? secondname);
         Task<Student> StudentById(int? id);
         Task<List<Student>> GetStudents();
         List<SelectListItem> GetCountries();

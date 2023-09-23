@@ -1,48 +1,149 @@
-﻿@model StudentManagmentSystem.Models.Entities.Student
+﻿@using StudentManagmentSystem.Models.Entities;
+@using StudentManagmentSystem.Models.Enums;
+@model StudentManagmentSystem.Models.Entities.Student
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавить";
 }
 
-<h1>Добавить новый студент</h1>
+<h1>Добавить нового студента</h1>
 
-<h4>Студент</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12 col-lg-12">
         <form asp-action="Create">
             @Html.AntiForgeryToken()
+            <h5>Основные данные:</h5>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label">Имя клиента</label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="FirstName" class="control-label">Имя</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="SecondName" class="control-label">Фамилия</label>
+                    <input asp-for="SecondName" class="form-control" />
+                    <span asp-validation-for="SecondName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="LastName" class="control-label">Отчество</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="GenderId" class="control-label">Пол</label>
+                    <select asp-for="GenderId" asp-items="@Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                    <span asp-validation-for="GenderId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label">Фамилия клиента</label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+            <br />
+
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Birthday" class="control-label">Дата рождения</label>
+                    <input asp-for="Birthday" class="form-control" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="FamilyStatus" class="control-label">Семейное положение</label>
+                    <input asp-for="FamilyStatus" class="form-control" />
+                    <span asp-validation-for="FamilyStatus" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Phone" class="control-label">Тел. номер</label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="PassportData" class="control-label">Паспорт</label>
+                    <input asp-for="PassportData" class="form-control" />
+                    <span asp-validation-for="PassportData" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <select asp-for="CountryId" asp-items="@(ViewBag.CountryList)" class="form-control"></select>
-                <span asp-validation-for="CountryId" class="text-danger"></span>
+            <br />
+
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="CountryId" class="control-label">Гражданство</label>
+                    <select asp-for="CountryId" asp-items="@(ViewBag.CountryList)" class="form-control"></select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="DocumentId" class="control-label">Тип документа</label>
+                    <select asp-for="DocumentId" asp-items="@Html.GetEnumSelectList<DocumentStatus>()" class="form-control"></select>
+                    <span asp-validation-for="DocumentId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Dactyloscopies[0].Status" class="control-label">Dactyloscopy</label>
-                <input asp-for="Dactyloscopies[0].Status" class="form-control" />
-                <span asp-validation-for="Dactyloscopies[0].Status" class="text-danger"></span>
+            <br />
+
+            <h5>Дактилоскопия:</h5>
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Dactyloscopies[0].Status" class="control-label">Статус</label>
+                    <input asp-for="Dactyloscopies[0].Status" class="form-control" />
+                    <span asp-validation-for="Dactyloscopies[0].Status" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Dactyloscopies[0].DateOfPassage" class="control-label">Дата прохождение</label>
+                    <input asp-for="Dactyloscopies[0].DateOfPassage" class="form-control" />
+                    <span asp-validation-for="Dactyloscopies[0].DateOfPassage" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Educations[0].EducationFormId" class="control-label">EducationFormId</label>
-                <input asp-for="Educations[0].EducationFormId" class="form-control" />
-                <span asp-validation-for="Educations[0].EducationFormId" class="text-danger"></span>
+            <br />
+
+            <h5>Образование:</h5>
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].StatusId" class="control-label">Статус</label>
+                    <select asp-for="Educations[0].StatusId" asp-items="@Html.GetEnumSelectList<EducationStatus>()" class="form-control"></select>
+                    <span asp-validation-for="Educations[0].StatusId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].EntryYear" class="control-label">Год поступление</label>
+                    <input asp-for="Educations[0].EntryYear" class="form-control" />
+                    <span asp-validation-for="Educations[0].EntryYear" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].InstituteId" class="control-label">InstituteId</label>
+                    <input asp-for="Educations[0].InstituteId" class="form-control" />
+                    <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].SpecialityId" class="control-label">SpecialityId</label>
+                    <input asp-for="Educations[0].SpecialityId" class="form-control" />
+                    <span asp-validation-for="Educations[0].SpecialityId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].GroupName" class="control-label">GroupName</label>
+                    <input asp-for="Educations[0].GroupName" class="form-control" />
+                    <span asp-validation-for="Educations[0].GroupName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Educations[0].InstituteId" class="control-label">InstituteId</label>
-                <input asp-for="Educations[0].InstituteId" class="form-control" />
-                <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span>
+            <br />
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].SpecializationId" class="control-label">SpecializationId</label>
+                    <input asp-for="Educations[0].SpecializationId" class="form-control" />
+                    <span asp-validation-for="Educations[0].SpecializationId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].EducationLevelId" class="control-label">EducationLevelId</label>
+                    <select asp-for="Educations[0].EducationLevelId" asp-items="@Html.GetEnumSelectList<EducationLevel>()" class="form-control"></select>
+                    <span asp-validation-for="Educations[0].EducationLevelId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].EducationFormId" class="control-label">EducationFormId</label>
+                    <select asp-for="Educations[0].EducationFormId" asp-items="@Html.GetEnumSelectList<EducationForm>()" class="form-control"></select>
+                    <span asp-validation-for="Educations[0].EducationFormId" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Educations[0].EducationBasisId" class="control-label">EducationBasisId</label>
+                    <select asp-for="Educations[0].EducationBasisId" asp-items="@Html.GetEnumSelectList<EducationBasis>()" class="form-control"></select>
+                    <span asp-validation-for="Educations[0].EducationBasisId" class="text-danger"></span>
+                </div>
             </div>
+           
             <br />
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-success" />

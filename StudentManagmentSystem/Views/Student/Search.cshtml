@@ -1,25 +1,58 @@
-﻿@model StudentManagmentSystem.Models.Entities.Student
+﻿@model IEnumerable<StudentManagmentSystem.Models.Entities.Student>
 
-<h2>Поиск студента по ID</h2>
+<h3>Поиск студента по фамилии</h3>
 
 <form method="get" action="@Url.Action("Search")">
     <div class="form-group">
-        <label for="studentId" class="control-label">Student ID:</label>
-        <input type="text" id="studentId" name="studentId" class="form-control" />
+        <div class="row">
+            <div class="col-2">
+                <label for="studentId" class="control-label">Фамилия студента:</label>
+            </div>
+            <div class="col-4">
+                <input type="text" id="secondname" name="secondname" class="form-control me-2" />
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary">Найти</button>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Найти</button>
+    <br />
 </form>
 
 @if (Model != null)
 {
     <h3>Результаты поиска:</h3>
-    <dl class="dl-horizontal">
+    @* <dl class="dl-horizontal">
         <dt>Имя:</dt>
         <dd>@Model.FirstName</dd>
         <dt>Фамилия:</dt>
         <dd>@Model.SecondName</dd>
         <!-- Добавьте другие необходимые данные из объекта StudentDetailsViewModel -->
-    </dl>
+    </dl> *@
+
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th></th>
+        </tr>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.FirstName</td>
+                <td>@student.SecondName</td>
+              
+                <td>
+                    @Html.ActionLink("Подробнее", "Details", new { id = student.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Редактировать", "Edit", new { id = student.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Удалить", "Delete", new { id = student.Id }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </table>
+
 }
 else if (ViewBag.Message != null)
 {

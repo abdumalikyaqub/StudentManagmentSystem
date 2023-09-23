@@ -13,5 +13,6 @@ namespace StudentManagmentSystem.Models.Entities
         public string? StreetName { get; set; }
         public string? HouseNumber { get; set; }
         public int? RoomNumber { get; set; }
+        public Student? Student { get; set; }
     }
 }
