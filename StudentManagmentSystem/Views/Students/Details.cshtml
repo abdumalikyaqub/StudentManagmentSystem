@@ -1,0 +1,64 @@
+﻿@model StudentManagmentSystem.Models.Entities.Student
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Информация о студента</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>№</dt>
+        <dd>@Model.Id</dd>
+        <dt>Имя:</dt>
+        <dd>@Model.FirstName</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.SecondName</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.LastName</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.Birthday</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.GenderId</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.FamilyStatus</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.Phone</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.PassportData</dd>
+        <dt>Фамилия:</dt>
+        <dd>@Model.DocumentId</dd>
+
+        <dt>Страна:</dt>
+        <dd>@(Model.Country.Title != null ? Model.Country.Title : "н/д")</dd>
+
+
+        <dt>Институт:</dt>
+        @if (Model.Educations.FirstOrDefault()?.InstituteId != null)
+        {
+            <dd>@Model.Educations.FirstOrDefault()?.InstituteId</dd>
+        }
+        else
+        {
+            <dd>н/д</dd>
+        }
+
+        <dt>Дактилоскопия:</dt>
+        @if (Model.Dactyloscopies != null)
+        {
+            <dd>@Model.Dactyloscopies.FirstOrDefault()?.Status</dd>
+        }
+        else
+        {
+            <dd>н/д</dd>
+        }
+        
+    </dl>
+
+    <br />
+    <div>
+        @Html.AntiForgeryToken()
+        <a asp-action="Index" class="btn btn-primary">Назад</a>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Удалить", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+    </div>
+</div>

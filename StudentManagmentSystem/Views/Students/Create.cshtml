@@ -3,10 +3,10 @@
 @model StudentManagmentSystem.Models.Entities.Student
 
 @{
-    ViewData["Title"] = "Редактировать";
+    ViewData["Title"] = "Добавить";
 }
 
-<h2>Редактировать студента</h2>
+<h2>Добавить нового студента</h2>
 
 <hr />
 <div class="row">
@@ -15,7 +15,6 @@
             @Html.AntiForgeryToken()
             <h5>Основные данные:</h5>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="row g-3">
                 <div class="col-sm-3">
                     <label asp-for="FirstName" class="control-label">Имя</label>
@@ -106,17 +105,17 @@
                     <span asp-validation-for="Educations[0].EntryYear" class="text-danger"></span>
                 </div>
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].InstituteId" class="control-label">InstituteId</label>
+                    <label asp-for="Educations[0].InstituteId" class="control-label">Институт</label>
                     <select asp-for="Educations[0].InstituteId" asp-items="@(ViewBag.InstituteList)" class="form-control"></select>
                     @* <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].SpecialityId" class="control-label">SpecialityId</label>
+                    <label asp-for="Educations[0].SpecialityId" class="control-label">Специальность</label>
                     <select asp-for="Educations[0].SpecialityId" asp-items="@(ViewBag.SpecialityList)" class="form-control"></select>
                     @* <span asp-validation-for="Educations[0].SpecialityId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].GroupName" class="control-label">GroupName</label>
+                    <label asp-for="Educations[0].GroupName" class="control-label">Группа</label>
                     <input asp-for="Educations[0].GroupName" class="form-control" />
                     <span asp-validation-for="Educations[0].GroupName" class="text-danger"></span>
                 </div>
@@ -124,30 +123,30 @@
             <br />
             <div class="row g-3">
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].SpecializationId" class="control-label">SpecializationId</label>
+                    <label asp-for="Educations[0].SpecializationId" class="control-label">Специализация</label>
                     <select asp-for="Educations[0].SpecializationId" asp-items="@(ViewBag.SpecializationList)" class="form-control"></select>
                     @* <span asp-validation-for="Educations[0].SpecializationId" class="text-danger"></span> *@
                 </div>
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].EducationLevelId" class="control-label">EducationLevelId</label>
+                    <label asp-for="Educations[0].EducationLevelId" class="control-label">Уровень</label>
                     <select asp-for="Educations[0].EducationLevelId" asp-items="@Html.GetEnumSelectList<EducationLevel>()" class="form-control"></select>
                     <span asp-validation-for="Educations[0].EducationLevelId" class="text-danger"></span>
                 </div>
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].EducationFormId" class="control-label">EducationFormId</label>
+                    <label asp-for="Educations[0].EducationFormId" class="control-label">Форма</label>
                     <select asp-for="Educations[0].EducationFormId" asp-items="@Html.GetEnumSelectList<EducationForm>()" class="form-control"></select>
                     <span asp-validation-for="Educations[0].EducationFormId" class="text-danger"></span>
                 </div>
                 <div class="col-sm-3">
-                    <label asp-for="Educations[0].EducationBasisId" class="control-label">EducationBasisId</label>
+                    <label asp-for="Educations[0].EducationBasisId" class="control-label">Основа</label>
                     <select asp-for="Educations[0].EducationBasisId" asp-items="@Html.GetEnumSelectList<EducationBasis>()" class="form-control"></select>
                     <span asp-validation-for="Educations[0].EducationBasisId" class="text-danger"></span>
                 </div>
             </div>
-
+           
             <br />
             <div class="form-group">
-                <input type="submit" value="Обновить" class="btn btn-success" />
+                <input type="submit" value="Добавить" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-primary">Назад</a>
             </div>
         </form>

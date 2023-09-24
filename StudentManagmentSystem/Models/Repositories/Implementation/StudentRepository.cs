@@ -21,10 +21,21 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
 
         public async Task DeleteStudentById(int id)
         {
-            var student = await _context.Students.FirstOrDefaultAsync(e => e.Id == id);
+            var student = await _context.Students
+                .Include(s => s.Country)
+                .Include(s => s.Educations)
+                .Include(s => s.Dactyloscopies)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+            var education = await _context.Educations.FirstOrDefaultAsync(e => e.StudentId == id);
+            var dactylos = await _context.Dactyloscopies.FirstOrDefaultAsync(e => e.StudentId == id);
+
             if (student != null)
             {
-                _context.Students.Remove(student);
+                _context.Remove(student);
+                _context.Remove(education);
+                _context.Remove(dactylos);
+                await _context.SaveChangesAsync();
             }
             
         }
@@ -37,6 +48,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             return student;
             //return await _context.Students.FirstOrDefaultAsync(e => e.StudentId == id);
         }
+
         public async Task<Student> StudentById(int? id)
         {
            
@@ -77,15 +89,32 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
                 //student_info.Id = student.Id;
                 //student_info.StudentId = student.Id;
                 student_info.FirstName = student.FirstName;
+                student_info.SecondName = student.SecondName;
                 student_info.LastName = student.LastName;
+                student_info.Birthday = student.Birthday;
+                student_info.GenderId = student.GenderId;
+                student_info.FamilyStatus = student.FamilyStatus;
+                student_info.Phone = student.Phone;
+                student_info.PassportData = student.PassportData;
                 student_info.CountryId = student.CountryId;
-                student_info.Dactyloscopies[0].Id = student.Dactyloscopies[0].Id;
-                student_info.Dactyloscopies[0].StudentId = student.Dactyloscopies[0].StudentId;
+                student_info.DocumentId = student.DocumentId;
+
+                //student_info.Dactyloscopies[0].Id = student.Dactyloscopies[0].Id;
+                //student_info.Dactyloscopies[0].StudentId = student.Dactyloscopies[0].StudentId;
                 student_info.Dactyloscopies[0].Status = student.Dactyloscopies[0].Status;
-                student_info.Educations[0].Id = student.Educations[0].Id;
-                student_info.Educations[0].StudentId = student.Educations[0].StudentId;
-                student_info.Educations[0].EducationFormId = student.Educations[0].EducationFormId;
+                student_info.Dactyloscopies[0].DateOfPassage = student.Dactyloscopies[0].DateOfPassage;
+
+                //student_info.Educations[0].Id = student.Educations[0].Id;
+                //student_info.Educations[0].StudentId = student.Educations[0].StudentId;
+                student_info.Educations[0].StatusId = student.Educations[0].StatusId;
+                student_info.Educations[0].EntryYear = student.Educations[0].EntryYear;
                 student_info.Educations[0].InstituteId = student.Educations[0].InstituteId;
+                student_info.Educations[0].GroupName = student.Educations[0].GroupName;
+                student_info.Educations[0].SpecialityId = student.Educations[0].SpecialityId;
+                student_info.Educations[0].SpecializationId = student.Educations[0].SpecializationId;
+                student_info.Educations[0].EducationLevelId = student.Educations[0].EducationLevelId;
+                student_info.Educations[0].EducationFormId = student.Educations[0].EducationFormId;
+                student_info.Educations[0].EducationBasisId = student.Educations[0].EducationBasisId;
 
                 await _context.SaveChangesAsync();
 

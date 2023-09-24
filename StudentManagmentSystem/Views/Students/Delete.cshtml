@@ -1,4 +1,7 @@
 ﻿@model StudentManagmentSystem.Models.Entities.Student
+@{
+    ViewData["Title"] = "Удалить";
+}
 
 <h2>Удалить студента</h2>
 
@@ -13,15 +16,10 @@
         <dd>@Model.SecondName</dd>
         <dt>Страна:</dt>
         <dd>@(Model.Country.Title != null ? Model.Country.Title : "н/д")</dd>
-        <!-- Добавьте другие необходимые данные из объекта StudentDetailsViewModel -->
     </dl>
     <form method="post">
         @Html.AntiForgeryToken()
         <input type="submit" value="Удалить" class="btn btn-danger" />
         <a href="@Url.Action("Index")" class="btn btn-primary">Отмена</a>
     </form>
-</div>
-<br />
-<div>
-    
 </div>

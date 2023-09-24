@@ -9,14 +9,14 @@ using StudentManagmentSystem.Models.Repositories.Interfaces;
 
 namespace StudentManagmentSystem.Controllers
 {
-    public class StudentController : Controller
+    public class StudentsController : Controller
     {
         private IStudentRepository _studentRepository;
         private IEducationRepository _educationRepository;
         private IDactyloscopyRepository _dactyloscopyRepository;
         private ICountryRepository _countryRepository;
 
-        public StudentController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository)
+        public StudentsController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;
@@ -28,34 +28,31 @@ namespace StudentManagmentSystem.Controllers
         public async Task<IActionResult> Index(string sortOrder)
         {
 
-            ViewBag.NameSortParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //ViewBag.CountrySortParam = sortOrder == "Country" ? "country_desc" : "Country";
-            //ViewBag.InstituteSortParam = sortOrder == "Institute" ? "institute_desc" : "Institute";
+            ViewBag.SecondNameSortParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CountrySortParam = sortOrder == "Country" ? "country_desc" : "Country";
+            ViewBag.InstituteSortParam = sortOrder == "Institute" ? "institute_desc" : "Institute";
 
             var students = await _studentRepository.GetStudents();
 
             switch (sortOrder)
             {
                 case "name_desc":
-                    students = students.OrderBy(s => s.Id).ToList();
-                    //students.Sort();
+                    students = students.OrderBy(s => s.SecondName).ToList();
                     break;
-                //case "Country":
-                //    students = (List<Student>)students.OrderBy(s => s.Country.Title);
-                //    break;
-                //case "country_desc":
-                //    students = (List<Student>)students.OrderByDescending(s => s.Country.Title);
-                //    break;
-                //case "Institute":
-                //    students = students.OrderBy(s => s.Educations.Find(e => e.InstituteId));
-                //    break;
-                //case "institute_desc":
-                //    students = students.OrderByDescending(s => s.Education.Institute);
-                //    break;
+                case "Country":
+                    students = students.OrderBy(s => s.Country.Title).ToList();
+                    break;
+                case "country_desc":
+                    students = students.OrderByDescending(s => s.Country.Title).ToList();
+                    break;
+                case "Institute":
+                    students = students.OrderBy(s => s.Educations[0].InstituteId).ToList();
+                    break;
+                case "institute_desc":
+                    students = students.OrderByDescending(s => s.Educations[0].InstituteId).ToList();
+                    break;
                 default:
                     students = students.OrderBy(s => s.FirstName).ToList();
-                    
-                    //students.Sort();
                     break;
             }
 
@@ -121,7 +118,7 @@ namespace StudentManagmentSystem.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (student != null)
             {
                 await _studentRepository.UpdateStudent(student);
                 return RedirectToAction(nameof(Index));
@@ -148,6 +145,16 @@ namespace StudentManagmentSystem.Controllers
             }
 
             return View(students);
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            var studentDetails = await _studentRepository.StudentById(id);
+            if (studentDetails == null)
+            {
+                return NotFound();
+            }
+            return View(studentDetails);
         }
 
         public async Task<ActionResult> Delete(int id)

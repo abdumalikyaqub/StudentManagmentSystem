@@ -3,18 +3,18 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1>Index</h1>
+<h2>Сортировка:</h2>
 
 <p>
-    @Html.ActionLink("Имя", "Index", new { sortOrder = ViewBag.NameSortParam })
+    @Html.ActionLink("Фамилия", "Index", new { sortOrder = ViewBag.SecondNameSortParam }, new { @class = "btn btn-warning" })
     |
-    @* @Html.ActionLink("Страна", "Index", new { sortOrder = ViewBag.CountrySortParam }) *@
-    
-    @* @Html.ActionLink("Институт", "Index", new { sortOrder = ViewBag.InstituteSortParam }) *@
+    @Html.ActionLink("Страна", "Index", new { sortOrder = ViewBag.CountrySortParam }, new { @class = "btn btn-warning" })
+    |
+    @Html.ActionLink("Институт", "Index", new { sortOrder = ViewBag.InstituteSortParam }, new { @class = "btn btn-warning" })
 </p>
 
 
-<h2>Список студентов</h2>
+<h2>Список студентов:</h2>
 
 <table class="table">
     <tr>
@@ -64,9 +64,9 @@
             <td>@student.Phone</td>
 
             <td>
-                @Html.ActionLink("Подробнее", "Details", new { id = student.Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Редактировать", "Edit", new { id = student.Id }, new { @class = "btn btn-warning" })
-                @Html.ActionLink("Удалить", "Delete", new { id = student.Id }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("📔", "Details", new { id = student.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("✒", "Edit", new { id = student.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("X", "Delete", new { id = student.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
