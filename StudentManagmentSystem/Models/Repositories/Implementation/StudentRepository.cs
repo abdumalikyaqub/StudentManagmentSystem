@@ -56,6 +56,8 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
                 .Include(s => s.Country)
                 .Include(s => s.Educations)
                 .Include(s => s.Dactyloscopies)
+                .Include(s => s.Registrations)
+                .Include(s => s.Orders)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
@@ -65,6 +67,8 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
                 .Include(s => s.Country)
                 .Include(s => s.Dactyloscopies)
                 .Include(s => s.Educations)
+                .Include(s => s.Registrations)
+                .Include(s => s.Orders)
                 .ToListAsync();
 
             return students;

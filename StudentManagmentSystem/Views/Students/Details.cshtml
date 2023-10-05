@@ -6,7 +6,168 @@
 <h2>Информация о студента</h2>
 
 <div>
-    <dl class="dl-horizontal">
+
+    <h5>Основные данные:</h5>
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Id" class="control-label">Id</label>
+            <div class="form-control">@Model.Id</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="FirstName" class="control-label">Имя</label>
+            <div class="form-control">@Model.FirstName</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="SecondName" class="control-label">Фамилия</label>
+            <div class="form-control">@Model.SecondName</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="LastName" class="control-label">Отчество</label>
+            <div class="form-control">@Model.LastName</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="GenderId" class="control-label">Пол</label>
+            <div class="form-control">@Model.GenderId</div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Birthday" class="control-label">Дата рождения</label>
+            <div class="form-control">@Model.Birthday</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="FamilyStatus" class="control-label">Семейное положение</label>
+            <div class="form-control">@Model.FamilyStatus</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Phone" class="control-label">Тел. номер</label>
+            <div class="form-control">@Model.Phone</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="PassportData" class="control-label">Паспорт</label>
+            <div class="form-control">@Model.PassportData</div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="CountryId" class="control-label">Гражданство</label>
+            <div class="form-control">@Model.CountryId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="DocumentId" class="control-label">Тип документа</label>
+            <div class="form-control">@Model.DocumentId</div>
+        </div>
+    </div>
+    <br />
+
+    <h5>Дактилоскопия:</h5>
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Dactyloscopies[0].Status" class="control-label">Статус</label>
+            <div class="form-control">@Model.Dactyloscopies[0].Status</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Dactyloscopies[0].DateOfPassage" class="control-label">Дата прохождение</label>
+            <div class="form-control">@Model.Dactyloscopies[0].DateOfPassage</div>
+        </div>
+    </div>
+    <br />
+
+    <h5>Образование:</h5>
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].StatusId" class="control-label">Статус</label>
+            <div class="form-control">@Model.Educations[0].StatusId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].EntryYear" class="control-label">Год поступления</label>
+            <div class="form-control">@Model.Educations[0].EntryYear</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].InstituteId" class="control-label">Институт</label>
+            <div class="form-control">@Model.Educations[0].InstituteId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].SpecialityId" class="control-label">Специальность</label>
+            <div class="form-control">@Model.Educations[0].SpecialityId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].GroupName" class="control-label">Группа</label>
+            <div class="form-control">@Model.Educations[0].GroupName</div>
+        </div>
+    </div>
+    <br />
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].SpecializationId" class="control-label">Специализация</label>
+            <div class="form-control">@Model.Educations[0].SpecializationId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].EducationLevelId" class="control-label">Уровень</label>
+            <div class="form-control">@Model.Educations[0].EducationLevelId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].EducationFormId" class="control-label">Форма</label>
+            <div class="form-control">@Model.Educations[0].EducationFormId</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Educations[0].EducationBasisId" class="control-label">Основа</label>
+            <div class="form-control">@Model.Educations[0].EducationBasisId</div>
+        </div>
+    </div>
+    <br />
+
+    <h5>Регистрация:</h5>
+
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Registrations[0].CountryName" class="control-label">Страна</label>
+            <div class="form-control">@Model.Registrations[0].CountryName</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Registrations[0].DistrictName" class="control-label">Область</label>
+            <div class="form-control">@Model.Registrations[0].DistrictName</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Registrations[0].RegionName" class="control-label">Район</label>
+            <div class="form-control">@Model.Registrations[0].RegionName</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Registrations[0].StreetName" class="control-label">Улица/Проспект</label>
+            <div class="form-control">@Model.Registrations[0].StreetName</div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Registrations[0].HouseNumber" class="control-label">Дом</label>
+            <div class="form-control">@Model.Registrations[0].HouseNumber</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Registrations[0].RoomNumber" class="control-label">Комната</label>
+            <div class="form-control">@Model.Registrations[0].RoomNumber</div>
+        </div>
+    </div>
+    <br />
+
+    <h5>Приказы:</h5>
+
+    <div class="row g-3">
+        <div class="col-sm-3">
+            <label asp-for="Orders[0].Number" class="control-label">Номер приказа</label>
+            <div class="form-control">@Model.Orders[0].Number</div>
+        </div>
+        <div class="col-sm-3">
+            <label asp-for="Orders[0].Title" class="control-label">Описание</label>
+            <div class="form-control">@Model.Orders[0].Title</div>
+        </div>
+    </div>
+
+   @*  <dl class="dl-horizontal">
         <dt>№</dt>
         <dd>@Model.Id</dd>
         <dt>Имя:</dt>
@@ -52,7 +213,7 @@
             <dd>н/д</dd>
         }
         
-    </dl>
+    </dl> *@
 
     <br />
     <div>

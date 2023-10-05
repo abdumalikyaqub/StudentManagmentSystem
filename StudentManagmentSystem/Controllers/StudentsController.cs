@@ -11,18 +11,20 @@ namespace StudentManagmentSystem.Controllers
 {
     public class StudentsController : Controller
     {
+        private readonly ILogger<StudentsController> _logger;
+
         private IStudentRepository _studentRepository;
         private IEducationRepository _educationRepository;
         private IDactyloscopyRepository _dactyloscopyRepository;
         private ICountryRepository _countryRepository;
 
-        public StudentsController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository)
+        public StudentsController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository, ILogger<StudentsController> logger)
         {
             _studentRepository = studentRepository;
             _educationRepository = educationRepository;
             _dactyloscopyRepository = dactyloscopyRepository;
             _countryRepository = countryRepository;
-
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index(string sortOrder)
@@ -74,9 +76,11 @@ namespace StudentManagmentSystem.Controllers
         {
             //if (ModelState.IsValid)
             //{
-
+            if (student != null)
+            {
                 await _studentRepository.AddStudent(student);
                 return RedirectToAction(nameof(Index));
+            }
                 //return RedirectToAction(nameof(Edit), new { id = student.Id });
             //}
 
@@ -88,6 +92,7 @@ namespace StudentManagmentSystem.Controllers
 
             return View(student);
         }
+
         [HttpGet]
         public async Task<ActionResult> Edit(int? id)
         {

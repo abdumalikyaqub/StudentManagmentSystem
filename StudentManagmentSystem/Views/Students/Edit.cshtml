@@ -146,6 +146,64 @@
                     <span asp-validation-for="Educations[0].EducationBasisId" class="text-danger"></span>
                 </div>
             </div>
+            <br />
+
+            <h5>Регистрация:</h5>
+
+            <br />
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Registrations[0].CountryName" class="control-label">Страна</label>
+                    <input asp-for="Registrations[0].CountryName" class="form-control" />
+                    <span asp-validation-for="Registrations[0].CountryName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Registrations[0].DistrictName" class="control-label">Область</label>
+                    <input asp-for="Registrations[0].DistrictName" class="form-control" />
+                    <span asp-validation-for="Registrations[0].DistrictName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Registrations[0].RegionName" class="control-label">Район</label>
+                    <input asp-for="Registrations[0].RegionName" class="form-control" />
+                    <span asp-validation-for="Registrations[0].RegionName" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Registrations[0].StreetName" class="control-label">Улица/Проспект</label>
+                    <input asp-for="Registrations[0].StreetName" class="form-control" />
+                    <span asp-validation-for="Registrations[0].StreetName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <br />
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Registrations[0].HouseNumber" class="control-label">Дом</label>
+                    <input asp-for="Registrations[0].HouseNumber" class="form-control" />
+                    <span asp-validation-for="Registrations[0].HouseNumber" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Registrations[0].RoomNumber" class="control-label">Комната</label>
+                    <input asp-for="Registrations[0].RoomNumber" class="form-control" />
+                    <span asp-validation-for="Registrations[0].RoomNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+            <h5>Приказы:</h5>
+
+            <br />
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <label asp-for="Orders[0].Number" class="control-label">Номер приказа</label>
+                    <input asp-for="Orders[0].Number" class="form-control" />
+                    <span asp-validation-for="Orders[0].Number" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <label asp-for="Orders[0].Title" class="control-label">Описание</label>
+                    <input asp-for="Orders[0].Title" class="form-control" />
+                    <span asp-validation-for="Orders[0].Title" class="text-danger"></span>
+                </div>
+            </div>
 
             <br />
             <div class="form-group">
