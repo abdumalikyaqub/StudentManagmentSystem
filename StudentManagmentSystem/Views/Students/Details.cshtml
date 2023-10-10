@@ -88,6 +88,10 @@
             <div class="form-control">@Model.Educations[0].EntryYear</div>
         </div>
         <div class="col-sm-3">
+            <label asp-for="Educations[0].KursLevel" class="control-label">Год поступления</label>
+            <div class="form-control">@Model.Educations[0].KursLevel</div>
+        </div>
+        <div class="col-sm-3">
             <label asp-for="Educations[0].InstituteId" class="control-label">Институт</label>
             <div class="form-control">@Model.Educations[0].InstituteId</div>
         </div>

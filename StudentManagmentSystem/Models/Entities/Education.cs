@@ -10,6 +10,7 @@ namespace StudentManagmentSystem.Models.Entities
        // public int EducationId { get; set; }
         public int? StudentId { get; set; }
         public string? EntryYear { get; set; }
+        public string? KursLevel { get; set; }
         public string? GroupName { get; set; }
         public EducationForm? EducationFormId { get; set; }
         public EducationLevel? EducationLevelId { get; set; }

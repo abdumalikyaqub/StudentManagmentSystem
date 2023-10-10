@@ -75,6 +75,21 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
             //return await (Task<List<Student>>)_context.Students.ToListAsync();
         }
 
+        //public async Task<List<Student>> GetStudentsByForm()
+        //{
+        //    var students = await _context.Students
+        //        .Include(s => s.Country)
+        //        .Include(s => s.Dactyloscopies)
+        //        .Include(s => s.Educations)
+        //        .Include(s => s.Registrations)
+        //        .Include(s => s.Orders)
+        //        .Where(s => s.Educations.Any(e => e.EducationFormId.Value == Enums.EducationForm.Заочная))
+        //        .ToListAsync();
+
+        //    return students;
+        //    //return await (Task<List<Student>>)_context.Students.ToListAsync();
+        //}
+
         public async Task<bool> IsStudentById(int id)
         {
             return await _context.Students.AnyAsync(e => e.Id == id);
@@ -112,6 +127,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
                 //student_info.Educations[0].StudentId = student.Educations[0].StudentId;
                 student_info.Educations[0].StatusId = student.Educations[0].StatusId;
                 student_info.Educations[0].EntryYear = student.Educations[0].EntryYear;
+                student_info.Educations[0].KursLevel = student.Educations[0].KursLevel;
                 student_info.Educations[0].InstituteId = student.Educations[0].InstituteId;
                 student_info.Educations[0].GroupName = student.Educations[0].GroupName;
                 student_info.Educations[0].SpecialityId = student.Educations[0].SpecialityId;
@@ -119,6 +135,17 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
                 student_info.Educations[0].EducationLevelId = student.Educations[0].EducationLevelId;
                 student_info.Educations[0].EducationFormId = student.Educations[0].EducationFormId;
                 student_info.Educations[0].EducationBasisId = student.Educations[0].EducationBasisId;
+
+
+                student_info.Registrations[0].CountryName = student.Registrations[0].CountryName;
+                student_info.Registrations[0].DistrictName = student.Registrations[0].DistrictName;
+                student_info.Registrations[0].RegionName = student.Registrations[0].RegionName;
+                student_info.Registrations[0].StreetName = student.Registrations[0].StreetName;
+                student_info.Registrations[0].HouseNumber = student.Registrations[0].HouseNumber;
+                student_info.Registrations[0].RoomNumber = student.Registrations[0].RoomNumber;
+
+                student_info.Orders[0].Number = student.Orders[0].Number;
+                student_info.Orders[0].Title = student.Orders[0].Title;
 
                 await _context.SaveChangesAsync();
 

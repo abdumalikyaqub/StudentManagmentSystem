@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentManagmentSystem.Models;
 using StudentManagmentSystem.Models.Repositories.Implementation;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddScoped<IDactyloscopyRepository, DactyloscopyRepository>();
 builder.Services.AddScoped<IEducationRepository, EducationRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 var app = builder.Build();
 

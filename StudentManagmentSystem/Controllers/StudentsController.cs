@@ -1,6 +1,4 @@
-﻿using iTextSharp.text.pdf;
-using iTextSharp.text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -185,39 +183,39 @@ namespace StudentManagmentSystem.Controllers
             return View(studentDetails);
         }
 
-        public async Task<IActionResult> Reports()
-        {
-            return View();
-        }
+        //public async Task<IActionResult> Reports()
+        //{
+        //    return View();
+        //}
 
-        public async Task<IActionResult> GeneratePdfReport()
-        {
-            var students = await _studentRepository.GetStudents();
+        //public async Task<IActionResult> GeneratePdfReport()
+        //{
+        //    var students = await _studentRepository.GetStudents();
 
-            using (var stream = new MemoryStream())
-            {
-                var document = new iTextSharp.text.Document();
-                PdfWriter.GetInstance(document, stream);
-                document.Open();
+        //    using (var stream = new MemoryStream())
+        //    {
+        //        var document = new iTextSharp.text.Document();
+        //        PdfWriter.GetInstance(document, stream);
+        //        document.Open();
 
-                var table = new PdfPTable(2);
-                table.AddCell("Id");
-                table.AddCell("Имя");
+        //        var table = new PdfPTable(2);
+        //        table.AddCell("Id");
+        //        table.AddCell("Имя");
 
-                foreach (var student in students)
-                {
-                    table.AddCell(student.Id.ToString());
-                    table.AddCell(student.FirstName);
-                }
+        //        foreach (var student in students)
+        //        {
+        //            table.AddCell(student.Id.ToString());
+        //            table.AddCell(student.FirstName);
+        //        }
 
-                document.Add(table);
-                document.Close();
+        //        document.Add(table);
+        //        document.Close();
 
-                var content = stream.ToArray();
-                Response.Headers["Content-Disposition"] = "inline; filename=StudentReport.pdf";
-                return File(content, "application/pdf", "StudentReport.pdf");
-            }
-        }
+        //        var content = stream.ToArray();
+        //        Response.Headers["Content-Disposition"] = "inline; filename=StudentReport.pdf";
+        //        return File(content, "application/pdf", "StudentReport.pdf");
+        //    }
+        //}
 
 
     }

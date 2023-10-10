@@ -105,6 +105,11 @@
                     <span asp-validation-for="Educations[0].EntryYear" class="text-danger"></span>
                 </div>
                 <div class="col-sm-3">
+                    <label asp-for="Educations[0].KursLevel" class="control-label">Курс</label>
+                    <input asp-for="Educations[0].KursLevel" class="form-control" />
+                    <span asp-validation-for="Educations[0].KursLevel" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
                     <label asp-for="Educations[0].InstituteId" class="control-label">Институт</label>
                     <select asp-for="Educations[0].InstituteId" asp-items="@(ViewBag.InstituteList)" class="form-control"></select>
                     @* <span asp-validation-for="Educations[0].InstituteId" class="text-danger"></span> *@

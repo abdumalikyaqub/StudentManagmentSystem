@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Отчеты";
+}
+<h2>Отчеты:</h2>
+
+<p>
+    @Html.ActionLink("Дактилоскопия", "DactyloscopiesPdfReport", new {}, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Заочники", "ZaochnikiPdfReport", new {}, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Академия", "AcademiyaPdfReport", new {}, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Завершившие", "GraduatePdfReport", new {}, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Паспорт", "PassportPdfReport", new {}, new { @class = "btn btn-primary" })
+</p>
