@@ -236,7 +236,8 @@ namespace StudentManagmentSystem.Controllers
 
         public async Task<IActionResult> PassportPdfReport()
         {
-            var students = await _studentRepository.GetStudents();
+            var students_info = await _studentRepository.GetStudents();
+            var students = students_info.Where(s => s.DocumentId.Value == Models.Enums.DocumentStatus.Гражданство_РФ);
 
             using (var stream = new MemoryStream())
             {
