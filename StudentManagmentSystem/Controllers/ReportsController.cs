@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudentManagmentSystem.Models.Repositories.Interfaces;
 using iTextSharp.text;
 using System;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace StudentManagmentSystem.Controllers
 {
@@ -21,7 +21,7 @@ namespace StudentManagmentSystem.Controllers
             _logger = logger;
         }
 
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();

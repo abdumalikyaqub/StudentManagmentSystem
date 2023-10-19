@@ -6,6 +6,7 @@ namespace StudentManagmentSystem.Models
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Dactyloscopy> Dactyloscopies { get; set; }
         public DbSet<Education> Educations { get; set; }
         public DbSet<Country> Countries { get; set; }

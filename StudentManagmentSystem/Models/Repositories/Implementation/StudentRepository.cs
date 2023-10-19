@@ -13,6 +13,7 @@ namespace StudentManagmentSystem.Models.Repositories.Implementation
         {
             _context = context;
         }
+
         public async Task AddStudent(Student student)
         {
             _context.Students.Add(student);

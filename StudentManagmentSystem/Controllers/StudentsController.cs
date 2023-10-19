@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -25,6 +26,7 @@ namespace StudentManagmentSystem.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index(string sortOrder)
         {
 
@@ -59,6 +61,7 @@ namespace StudentManagmentSystem.Controllers
             return View(students);
         }
 
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             ViewBag.CountryList = _studentRepository.GetCountries();
@@ -68,6 +71,7 @@ namespace StudentManagmentSystem.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student student)
@@ -132,6 +136,7 @@ namespace StudentManagmentSystem.Controllers
             return View(student);
         }
 
+        [Authorize]
         public async Task<ActionResult> Search(string? secondname)
         {
             if (secondname == null)
