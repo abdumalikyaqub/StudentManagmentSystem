@@ -6,3 +6,17 @@ services:
     build:
       context: .
       dockerfile: StudentManagmentSystem/Dockerfile
+
+  app_db:
+    image: postgres:latest
+    container_name: app_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=psdev98
+      - POSTGRES_DB=ps-student2
+    ports:
+      - "5433:5432"
+    restart: always
+    volumes:
+      - app_data:/var/lib/postgresql/data
+   

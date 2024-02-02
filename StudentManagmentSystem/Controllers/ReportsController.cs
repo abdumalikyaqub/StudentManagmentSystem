@@ -13,7 +13,7 @@ namespace StudentManagmentSystem.Controllers
         private IStudentRepository _studentRepository;
 
         // Устанавливаем шрифт с поддержкой кириллицы (Arial Unicode MS, например)
-        public BaseFont? baseFont = BaseFont.CreateFont("C:\\Users\\debug\\Music\\Roboto-Medium.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        public BaseFont? baseFont = BaseFont.CreateFont($"{Directory.GetCurrentDirectory()}\\wwwroot\\font\\Roboto-Medium.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
         public ReportsController(IStudentRepository studentRepository, IEducationRepository educationRepository, IDactyloscopyRepository dactyloscopyRepository, ICountryRepository countryRepository, ILogger<StudentsController> logger)
         {
@@ -24,6 +24,7 @@ namespace StudentManagmentSystem.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            //Console.WriteLine(Directory.GetCurrentDirectory());
             return View();
         }
 
