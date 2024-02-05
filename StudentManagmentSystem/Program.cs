@@ -44,6 +44,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "NotFound",
+    pattern: "{controller=Auth}/{action=Index}/{id?}");
+
 
 //app.MapControllerRoute(
 //    name: "Reports",
