@@ -1,13 +1,37 @@
 version: '3.4'
 
+networks:
+  student-net:
+    driver: bridge
+
+
 services:
-  studentmanagmentsystem:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+  web:
+    container_name: StudentManagmentSystem  
+    build:
+      context: .
+      dockerfile: StudentManagmentSystem/Dockerfile
     ports:
-      - "80"
-      - "443"
+      - "80:80"
+    networks:
+      - student-net
+    depends_on:
+      - postgres_db
+
+  postgres_db:
+    image: postgres:latest
+    container_name: app_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=psdev98
+      - POSTGRES_DB=ps-student2
+    ports:
+      - "5433:5432"
+    networks:
+      - student-net
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+        
