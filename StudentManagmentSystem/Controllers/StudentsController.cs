@@ -26,7 +26,7 @@ namespace StudentManagmentSystem.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Index(string sortOrder)
         {
 
