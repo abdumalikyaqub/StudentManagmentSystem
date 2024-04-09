@@ -55,7 +55,7 @@
     <div class="row g-3">
         <div class="col-sm-3">
             <label asp-for="CountryId" class="control-label">Гражданство</label>
-            <div class="form-control">@Model.CountryId</div>
+            <div class="form-control">@Model.Country.Title</div>
         </div>
         <div class="col-sm-3">
             <label asp-for="DocumentId" class="control-label">Тип документа</label>
@@ -93,11 +93,11 @@
         </div>
         <div class="col-sm-3">
             <label asp-for="Educations[0].InstituteId" class="control-label">Институт</label>
-            <div class="form-control">@Model.Educations[0].InstituteId</div>
+            <div class="form-control">@Model.Educations[0].Institute.Title</div>
         </div>
         <div class="col-sm-3">
             <label asp-for="Educations[0].SpecialityId" class="control-label">Специальность</label>
-            <div class="form-control">@Model.Educations[0].SpecialityId</div>
+            <div class="form-control">@Model.Educations[0].Speciality.Title</div>
         </div>
         <div class="col-sm-3">
             <label asp-for="Educations[0].GroupName" class="control-label">Группа</label>
@@ -108,7 +108,7 @@
     <div class="row g-3">
         <div class="col-sm-3">
             <label asp-for="Educations[0].SpecializationId" class="control-label">Специализация</label>
-            <div class="form-control">@Model.Educations[0].SpecializationId</div>
+            <div class="form-control">@Model.Educations[0].Specialization.Title</div>
         </div>
         <div class="col-sm-3">
             <label asp-for="Educations[0].EducationLevelId" class="control-label">Уровень</label>

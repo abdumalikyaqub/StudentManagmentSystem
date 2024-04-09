@@ -58,6 +58,7 @@ namespace StudentManagmentSystem.Controllers
                     break;
             }
 
+            ViewBag.InstituteList = _studentRepository.GetInstitutes();
             return View(students);
         }
 
@@ -111,6 +112,9 @@ namespace StudentManagmentSystem.Controllers
             }
 
             //var countries = await _countryRepository.GetCountries();
+            ViewBag.InstituteList = _studentRepository.GetInstitutes();
+            ViewBag.SpecialityList = _studentRepository.GetSpecialities();
+            ViewBag.SpecializationList = _studentRepository.GetSpecializations();
             ViewBag.CountryList = _studentRepository.GetCountries();
             return View(student);
         }
@@ -133,6 +137,9 @@ namespace StudentManagmentSystem.Controllers
 
             var countries = await _countryRepository.GetCountries();
             ViewBag.CountryList = new SelectList(countries, "Id", "Title");
+            ViewBag.InstituteList = _studentRepository.GetInstitutes();
+            ViewBag.SpecialityList = _studentRepository.GetSpecialities();
+            ViewBag.SpecializationList = _studentRepository.GetSpecializations();
             return View(student);
         }
 
@@ -158,10 +165,17 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var studentDetails = await _studentRepository.StudentById(id);
+
             if (studentDetails == null)
             {
                 return NotFound();
             }
+
+            ViewBag.InstituteList = _studentRepository.GetInstitutes();
+            ViewBag.SpecialityList = _studentRepository.GetSpecialities();
+            ViewBag.SpecializationList = _studentRepository.GetSpecializations();
+            ViewBag.CountryList = _studentRepository.GetCountries();
+
             return View(studentDetails);
         }
 

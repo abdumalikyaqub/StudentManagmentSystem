@@ -46,7 +46,7 @@
             }
             @if (student.Educations.FirstOrDefault()?.InstituteId != null)
             {
-                <td>@student.Educations.FirstOrDefault()?.InstituteId</td>
+                <td>@student.Educations.FirstOrDefault()?.Institute.Title</td>
             }
             else
             {
